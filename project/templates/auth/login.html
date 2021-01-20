@@ -1,0 +1,51 @@
+{% extends 'layouts/forms.html' %}
+
+{% block title %}
+    Авторизация
+{% endblock %}
+
+{% block content %}
+    <div class="col-12 col-md-6 h-100">
+        <div class="form login">
+            <div>
+                <div class="form-title">
+                    <a href="#" class="logo nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g>
+                            <rect x="240" y="480" width="32" height="32"  data-original="#000000"/>
+                            <rect x="240" y="416" width="32" height="32"  data-original="#000000"/>
+                            <polygon points="176,32 176,0 64,0 64,112 96,112 96,52.4 212.672,158.384 234.192,134.688 121.136,32" data-original="#000000"/>
+                            <polygon points="336,0 336,32 392.416,32 240,184.416 240,384 272,384 272,197.664 416,53.664 416,112 448,112 448,0"  data-original="#000000"/>
+                        </svg>
+                    </a>
+                    <h1>Авторизация</h1>
+                </div>
+                <form method="post">
+                    <div class="form-group">
+                        <input type="email" class="form-control form-main {% if get_flashed_messages()[0] and get_flashed_messages()[0]['email'] %} is-invalid {% endif %}" placeholder="Почта" name="email">
+                        {% if get_flashed_messages()[0] and get_flashed_messages()[0]['email'] %}
+                            <small class="invalid-feedback">{{ get_flashed_messages()[0]['email'] }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control form-main {% if get_flashed_messages()[0] and get_flashed_messages()[0]['password'] %} is-invalid {% endif %}" placeholder="Пароль" name="password">
+                        {% if get_flashed_messages()[0] and get_flashed_messages()[0]['password'] %}
+                            <small class="invalid-feedback">{{ get_flashed_messages()[0]['password'] }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-blue btn-block">Войти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-0 col-md-6 d-flex justify-content-center align-items-center">
+        <div>
+            <h1 class="white">Нет Аккаунта ?</h1>
+            <p class="promote-p" style="margin-top: 25px;"><i class="fa fa-search fa-lg"></i> Читайте о том, что вам интересно.</p>
+            <p class="promote-p"><i class="fa fa-group fa-lg"></i> Узнайте, о чем говорят в мире.</p>
+            <p class="promote-p"><i class="fa fa-comments fa-lg"></i> Присоединяйтесь к общению.</p>
+            <a href="{{url_for('auth.register')}}" class="btn btn-outline-light btn-block" style="margin-top: 25px;">Зарегистрироваться</a>
+        </div>
+    </div>
+{% endblock %}

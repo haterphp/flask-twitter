@@ -1,0 +1,87 @@
+body.dark,
+body.dark .news{
+    background: rgb(21, 32, 43) !important;
+}
+
+body.dark .nav-item i,
+body.dark .nav-item p{
+    color: #fff;
+}
+
+body.dark .nav-item:hover i,
+body.dark .nav-item:hover p{
+    color:  rgba(29,161,242,1.00);
+}
+
+body.dark p, 
+body.dark h1, 
+body.dark h2, 
+body.dark h3{
+    color: #fff;
+}
+
+body.dark .news{
+    transition: none !important;
+}
+
+body.dark textarea{
+    background: transparent !important;
+    color: #fff !important;
+}
+
+body.dark .form-main::placeholder,
+body.dark .form-main{
+    color: #fff;
+}
+
+body.dark .create-post-panel{
+    border-bottom-color: #0000001a;
+}
+
+body.dark .news .news-header * {
+    color: #fff;
+}
+
+body.dark .alert p{
+    color: var(--dark);
+}
+
+body.dark .custom-modal{
+    background: rgb(21, 32, 43);
+}
+
+body.dark .news .footer-item i{
+    color: #fff;
+}
+
+body.dark .footer-item .like:hover{
+    background: rgba(255, 0, 0, 0.1) ;
+}
+
+body.dark .news .news-footer .like.active + p,
+body.dark .footer-item .like.active i,
+body.dark .footer-item .like:hover i{
+    color: rgb(255, 0, 0);
+}
+
+
+body.dark .footer-item .comment:hover{
+    background: rgba(29,161,242, .1) ;
+}
+
+body.dark .news .news-footer .comment.active + p,
+body.dark .footer-item .comment.active i,
+body.dark .footer-item .comment:hover i{
+    color:  rgba(29,161,242,1.00);
+}
+
+
+body.dark .footer-item .retweet:hover{
+    background: rgba(6, 156, 13, 0.1) ;
+}
+
+body.dark .news .news-footer .retweet.active + p,
+body.dark .footer-item .retweet.active i,
+body.dark .footer-item .retweet:hover i{
+    color: rgba(6, 156, 13);
+}

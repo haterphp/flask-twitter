@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/themes.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+
+    <script defer src="{{url_for('static', filename='js/libs/jquery.js')}}"></script>
+    <script defer src="{{url_for('static', filename='js/libs/bootstrap.min.js')}}"></script>
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body class="light">
+    <div class="page">
+        <div class="container h-100">
+            <div class="row w-100 h-100">
+                <div class="col-3 column d-flex align-items-start justify-content-end">
+                    <div class="nav d-flex flex-column align-items-start">
+                        <a href="#" class="logo nav-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g>
+                                <rect x="240" y="480" width="32" height="32"  data-original="#000000"/>
+                                <rect x="240" y="416" width="32" height="32"  data-original="#000000"/>
+                                <polygon points="176,32 176,0 64,0 64,112 96,112 96,52.4 212.672,158.384 234.192,134.688 121.136,32" data-original="#000000"/>
+                                <polygon points="336,0 336,32 392.416,32 240,184.416 240,384 272,384 272,197.664 416,53.664 416,112 448,112 448,0"  data-original="#000000"/>
+                            </svg>
+                        </a>
+                        <ul>
+                            <li class="nav-item active">
+                                <a href="{{ url_for('news.home') }}">
+                                    <i class="fa fa-home fa-lg"></i>
+                                    <p>Главная</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="">
+                                    <i class="fa fa-search fa-lg"></i>
+                                    <p>Поиск</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="">
+                                    <i class="fa fa-comments-o fa-lg"></i>
+                                    <p>Сообщения</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="">
+                                    <i class="fa fa-user fa-lg"></i>
+                                    <p>Профиль</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a data-toggle="modal" data-target="#settingsModal">
+                                    <i class="fa fa-cog fa-lg"></i>
+                                    <p>Настройки</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <button class="btn btn-blue btn-block btn-icon" data-toggle="modal" data-target="#createPostModal"><i class="fa fa-pencil fa-log"></i><p>Что нового ?</p></button>
+                    </div>
+                </div>
+                <div class="col-9 column">
+                    <header>
+                        {% block header %}{% endblock %}
+                    </header>
+                    <main>
+                        {% block content %}{% endblock %}
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alerts">
+    </div>
+    {% block modals %}{% endblock %}
+    <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="custom-modal">
+                    <div class="custom-modal-header">
+                        <h2>Что нового?</h2>
+                        <button type="button" class="close comment-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="custom-modal-body">
+                        <div class="create-post-panel">
+                            <div class="profile-img" style="background-image: url('{% if g.user.image != None %} {{url_for('static', filename='upload/'+g.user.image)}} {% else %} {{url_for('static', filename='img/user-default.jpg')}} {% endif %}')">
+                            </div>
+                            <div class="editor">
+                                <form onsubmit="sendForm('{{url_for('news.create')}}', 'content-modal', event)" class="w-100" id="form-modal" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <textarea placeholder="Что нового?" name="content" class="form-control"></textarea>
+                                        <small class="invalid-feedback"></small>
+                                    </div>
+                                    <div class="media-content" id="media-content-modal">
+                                    </div>
+                                    <div class="survey-content" id="survey-content-modal">
+                                    </div>
+                                    <div class="editor-footer d-flex justify-content-between align-items-center w-100">
+                                        <div class="editor-functions d-flex">
+                                            <input type="file" multiple id="editor_files_modal" class="editor-hidden editor-files" accept="image/png, image/jpg, image/jpeg, image/gif" onchange="imagePreview('#media-content-modal', event.target.files)">
+                                            <label class="func nav-item" for="editor_files_modal">
+                                                <i class="fa fa-image fa-lg"></i>
+                                            </label>
+                                            <button class="func nav-item" type="button" onclick="createSurvey('#survey-content-modal')">
+                                                <i class="fa fa-question-circle fa-lg"></i>
+                                            </button>
+                                        </div>
+                                        <button class="btn btn-blue">Опубликовать</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="custom-modal">
+                    <div class="custom-modal-header">
+                        <h2>Настройки</h2>
+                        <button type="button" class="close comment-close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="custom-modal-body">
+                        <div class="settings-section">
+                            <div class="title">
+                                <h3>Оформление</h3>
+                            </div>
+                            <div class="content">
+                                <div class="sub-section">
+                                    <h4 class="sub-title">Фон</h4>
+                                    <div class="sub-content">
+                                        <div class="colors">
+                                            <div class="color light">
+                                                Светлая
+                                            </div>
+                                            <div class="color dark">
+                                                Темная
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <div class="title">
+                                <h3>Аккаунт</h3>
+                            </div>
+                            <div class="content">
+                                <a href="{{url_for('auth.logout')}}" class="btn btn-danger btn-block">Выход</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/themes.js')}}"></script>
+    <script src="{{url_for('static', filename='js/showImage.js')}}"></script>
+    <script src="{{url_for('static', filename='js/survey.js')}}"></script>
+    <script src="{{url_for('static', filename='js/alert.js')}}"></script>
+
+    {% block scripts %}{% endblock %}
+
+    <script>
+        async function sendForm(url, form_prefix, ev){
+            ev.preventDefault();
+
+            const textarea = ev.target.querySelector('textarea[name=content]');
+            textarea.classList.remove('is-invalid');
+
+            const body = {
+                'content': textarea.value,
+            }
+
+            if(sendFiles[`#media-${form_prefix}`]){
+                files = parseToArray(sendFiles[`#media-${form_prefix}`]);
+                files.forEach((element, index) => body[`image.${index}`] = element);
+            }
+
+            if(surveys[`#survey-${form_prefix}`]){
+                body['survey'] = JSON.stringify(surveys[`#survey-${form_prefix}`])
+                surveys[`#survey-${form_prefix}`].element.querySelector('.title').classList.remove('is-invalid')
+                 for(let question of surveys[`#survey-${form_prefix}`].questions)
+                    question.element.querySelector('.question').classList.remove('is-invalid')
+            }
+
+            const formdata = new FormData();
+
+            for(let name in body)
+                formdata.append(name, body[name])
+
+            const result = await fetch(url, {method:'POST', headers:{}, body:formdata}).then(res => res.json());
+
+            if(result.code == 422){
+                if(result.errors.content){
+                    textarea.classList.add('is-invalid');
+                    ev.target.querySelector('textarea[name=content] + .invalid-feedback').innerHTML = result.errors.content;
+                }
+
+                if(result.errors.survey){
+                    if(result.errors.survey.title){
+                       surveys[`#survey-${form_prefix}`].element.querySelector('.title').classList.add('is-invalid')
+                       surveys[`#survey-${form_prefix}`].element.querySelector('.title + .invalid-feedback').innerHTML = result.errors.survey.title;
+                    }
+
+                    if(result.errors.survey.questions){
+                        for(let idx in result.errors.survey.questions){
+                            surveys[`#survey-${form_prefix}`].questions[idx].element.querySelector('.question').classList.add('is-invalid')
+                            surveys[`#survey-${form_prefix}`].questions[idx].element.querySelector('.question + .invalid-feedback').innerHTML = result.errors.survey.questions[idx]
+                        }
+                    }
+
+                    if(result.errors.survey.questions_much){
+                        alertCreate('danger', result.errors.survey.questions_much)
+                    }
+                }
+            }
+            else if(result.code == 200){
+                textarea.value = '';
+                if(sendFiles[`#media-${form_prefix}`]){
+                    qs(`#media-${form_prefix}`).innerHTML = '';
+                    delete sendFiles[`#media-${form_prefix}`];
+                    delete previewFiles[`#media-${form_prefix}`];
+                }
+
+                if(surveys[`#survey-${form_prefix}`]){
+                    deleteSurvey(surveys[`#survey-${form_prefix}`], `#survey-${form_prefix}`)
+                }
+                alertCreate('success', result.message)
+                await getNews();
+            }
+        }
+    </script>
+</body>
+</html>
